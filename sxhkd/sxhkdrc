@@ -67,6 +67,10 @@ ctrl + alt + {b,f,t}
 
 # Set up Media keys and others
 
+# Increase volume by 5% till it reaches 120% to save from tearing
+XF86AudioRaiseVolume
+    bash /home/starlight/.config/sxhkd/volume.sh
+
 # Increase/decrease volume by 5%
 XF86AudioLowerVolume
     pactl set-sink-volume 0 -5%
