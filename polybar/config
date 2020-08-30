@@ -17,21 +17,16 @@
 ;==========================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
 background = #0f111a
 background-alt = #282a36
-;foreground = ${xrdb:color7:#222}
 foreground = #f8f8f2
-foreground-alt = #44475a
+foreground-alt = #282a36
 accent = #ff5555
 
 [bar/starbar]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 27
-;offset-x = 1%
-;offset-y = 1%
-radius = 6.0
+radius = 12.0
 fixed-center = false
 
 background = ${colors.background}
@@ -43,11 +38,7 @@ line-color = #f00
 border-size = 5
 border-color = #00000000
 
-padding-left = 2
-padding-right = 2
-
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
@@ -59,14 +50,13 @@ modules-right = xkeyboard pulseaudio checknetwork battery date powermenu
 
 tray-position = right
 tray-padding = 2
-;tray-background = #0063ff
 
 wm-restack = bspwm
 
 ;override-redirect = true
 
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -83,6 +73,8 @@ label-indicator-on-capslock-padding = 1
 label-indicator-on-numlock-padding = 1
 label-indicator-on-capslock-background = ${colors.accent}
 label-indicator-on-numlock-background = ${colors.accent}
+label-indicator-on-capslock-foreground = ${colors.foreground-alt}
+label-indicator-on-numlock-foreground = ${colors.foreground-alt}
 
 [module/bspwm]
 type = internal/bspwm
@@ -103,17 +95,17 @@ label-empty = 
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 2
 
-; Separator in between workspaces
-; label-separator = |
-
 [module/date]
 type = internal/date
 interval = 5
+format-foreground = ${colors.foreground}
+format-underline = ${colors.accent}
+format-padding = 2
 
 date =
 date-alt = " %Y-%m-%d"
 
-time = %H:%M
+time = "%H:%M "
 time-alt = %H:%M:%S
 
 format-prefix = 
@@ -124,30 +116,21 @@ label = %date% %time%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
-label-volume = Vol %percentage%%
+format-volume = <ramp-volume><label-volume>
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
+label-volume-underline = ${colors.accent}
 
-label-muted = 🔇 Muted
+label-muted = Muted
 label-muted-foreground = #666
 label-muted-underline = ${colors.accent}
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
+ramp-volume-underline = ${colors.accent}
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
+ramp-volume-3 = " "
+ramp-volume-4 = " "
 
 [module/battery]
 type = internal/battery
@@ -155,52 +138,37 @@ battery = BAT1
 adapter = ACAD
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
+format-charging = <animation-charging><label-charging>
+label-charging-underline = ${colors.accent}
 
 format-discharging = <label-discharging>
+format-discharging-underline = ${colors.accent}
+label-discharging = " %percentage%% "
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-full-prefix-underline = ${colors.accent}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
-
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
-animation-discharging-foreground = ${colors.foreground-alt}
-animation-discharging-framerate = 750
+animation-charging-underline = ${colors.accent}
 
 [module/checknetwork]
 type = custom/script
-
-; Command to be executed (using "/usr/bin/env sh -c [command]")
+format-underline = ${colors.accent}
 exec = ~/.config/polybar/network
-
-; Will the script output continous content?
-; Default: false
 tail = true
-
-; Seconds to sleep between updates
-; Default: 2 (0 if `tail = true`)
 interval = 5
-
-; click-left will be executed using "/usr/bin/env sh -c [command]"
 click-left = /home/starlight/.config/polybar/rofi-wifi-menu.sh &
 
 
 [module/powermenu]
 type = custom/text
 content = 
+content-foreground = ${colors.foreground-alt}
 content-background = ${colors.accent}
 content-padding = 2
 click-left = ~/.config/polybar/powermenu &
@@ -208,6 +176,7 @@ click-left = ~/.config/polybar/powermenu &
 [module/launcher]
 type = custom/text
 content = 
+content-foreground = ${colors.foreground-alt}
 content-background = ${colors.accent}
 content-padding = 2
 click-left = ~/.config/polybar/launcher &
