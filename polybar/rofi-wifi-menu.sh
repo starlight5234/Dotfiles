@@ -6,19 +6,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 FIELDS=SSID,SECURITY
-POSITION=0
-YOFF=0
-XOFF=0
 FONT="FuraCode Nerd Font Mono 8"
 DIVIDER="-------------"
-
-if [ -r "$DIR/config" ]; then
-	source "$DIR/config"
-elif [ -r "$HOME/.config/rofi/wifi" ]; then
-	source "$HOME/.config/rofi/wifi"
-else
-	echo "WARNING: config file not found! Using default values."
-fi
 
 LIST=$(nmcli --fields "$FIELDS" device wifi list | awk -F'  +' '{ if (!seen[$1]++) print}' | sed -n '1!p')
 # For some reason rofi always approximates character width 2 short... hmmm
@@ -53,7 +42,7 @@ fi
 
 
 
-CHENTRY=$(echo -e "$LIST\n$DIVIDER\nManual\n$TOGGLE" | rofi -dmenu -p "Wi-Fi SSID: " -i -lines "$LINENUM" -a "$HIGHLINE" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
+CHENTRY=$(echo -e "$LIST\n$DIVIDER\nManual\n$TOGGLE" | rofi -dmenu -p "Wi-Fi SSID" -i -lines "$LINENUM" -a "$HIGHLINE" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
 # If the user inputs "manual" as their SSID in the start window, it will bring them to this screen
@@ -88,7 +77,7 @@ else
 		nmcli con up "$CHSSID"
 	else
 		if [[ "$CHENTRY" =~ "WPA2" ]] || [[ "$CHENTRY" =~ "WEP" ]]; then
-			WIFIPASS=$(echo "if connection is stored, hit enter" | rofi -dmenu -p "password: " -lines 1 -font "$FONT" )
+			WIFIPASS=$(echo "if connection is stored, hit enter" | rofi -dmenu -p "password" -lines 1 -font "$FONT" )
 		fi
 		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
 	fi

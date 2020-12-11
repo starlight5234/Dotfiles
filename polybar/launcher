@@ -27,7 +27,7 @@ fi
 rofi -show drun -sidebar-mode \
 -modi run,drun,window \
 -hide-scrollbar false \
--show-icons -drun-icon-theme "Arc Full Icon" \
+-show-icons -drun-icon-theme "Dracula Icons" \
 -bw 2 \
 -lines 10 \
 -padding 24 \
@@ -35,7 +35,7 @@ rofi -show drun -sidebar-mode \
 -location 1 \
 -xoffset 5 \
 -yoffset 40 \
--columns 3 \
+-columns 1 \
 -font "FuraCode Nerd Font 10" \
 -color-enabled true \
 -color-window "$BACKGROUND,$BLACK,$BACKGROUND" \
