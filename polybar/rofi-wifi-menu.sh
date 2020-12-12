@@ -7,11 +7,13 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 FIELDS=SSID,SECURITY
 FONT="FuraCode Nerd Font Mono 8"
-DIVIDER="-------------"
+POSITION=3
+YOFF=40
+XOFF=-10
 
-LIST=$(nmcli --fields "$FIELDS" device wifi list | awk -F'  +' '{ if (!seen[$1]++) print}' | sed -n '1!p')
+LIST=$(nmcli --fields "$FIELDS" device wifi list | sed '/^--/d')
 # For some reason rofi always approximates character width 2 short... hmmm
-RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+3))
+RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+2))
 # Dynamically change the height of the rofi menu
 LINENUM=$(echo "$LIST" | wc -l)
 # Gives a list of known connections so we can parse it later
@@ -35,20 +37,20 @@ fi
 
 
 if [[ "$CONSTATE" =~ "enabled" ]]; then
-	TOGGLE="Toggle off"
+	TOGGLE="Toggle Off"
 elif [[ "$CONSTATE" =~ "disabled" ]]; then
-	TOGGLE="Toggle on"
+	TOGGLE="Toggle On"
 fi
 
 
 
-CHENTRY=$(echo -e "$LIST\n$DIVIDER\nManual\n$TOGGLE" | rofi -dmenu -p "Wi-Fi SSID" -i -lines "$LINENUM" -a "$HIGHLINE" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
+CHENTRY=$(echo -e "$TOGGLE\n$LIST\nManual" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
 # If the user inputs "manual" as their SSID in the start window, it will bring them to this screen
 if [ "$CHENTRY" = "Manual" ] ; then
 	# Manual entry of the SSID and password (if appplicable)
-	MSSID=$(echo "enter the SSID of the network (SSID,password)" | rofi -dmenu -p "Manual Entry: " -font "$FONT" -lines 1)
+	MSSID=$(echo "Enter the SSID of the network (SSID,password)" | rofi -dmenu -p "Manual Entry " -font "$FONT" -lines 1)
 	# Separating the password from the entered string
 	MPASS=$(echo "$MSSID" | awk -F "," '{print $2}')
 
@@ -59,10 +61,10 @@ if [ "$CHENTRY" = "Manual" ] ; then
 		nmcli dev wifi con "$MSSID" password "$MPASS"
 	fi
 
-elif [ "$CHENTRY" = "Toggle on" ]; then
+elif [ "$CHENTRY" = "Toggle On" ]; then
 	nmcli radio wifi on
 
-elif [ "$CHENTRY" = "Toggle off" ]; then
+elif [ "$CHENTRY" = "Toggle Off" ]; then
 	nmcli radio wifi off
 
 else
@@ -77,10 +79,9 @@ else
 		nmcli con up "$CHSSID"
 	else
 		if [[ "$CHENTRY" =~ "WPA2" ]] || [[ "$CHENTRY" =~ "WEP" ]]; then
-			WIFIPASS=$(echo "if connection is stored, hit enter" | rofi -dmenu -p "password" -lines 1 -font "$FONT" )
+			WIFIPASS=$(echo "If connection is stored, hit enter." | rofi -dmenu -p "Passphrase " -lines 1 -font "$FONT" )
 		fi
 		nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
 	fi
 
 fi
-
