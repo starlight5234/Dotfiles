@@ -50,4 +50,5 @@ fi
 
 numlockx &
 sxhkd &
+betterlockscreen -l dimblur -b 0 &
 exec bspwm
