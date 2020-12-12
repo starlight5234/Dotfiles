@@ -6,8 +6,8 @@ ETHER="enp7s0"
 
 
 count=0
-disconnected=" Disconnected"
-connected=""
+disconnected="睊 Disconnected"
+connected="直"
 
 ID="$(ip link | awk '/state UP/ {print $2}')"
 wifi_id=$(nmcli | grep $WIFI | awk '{print $4}')
