@@ -69,6 +69,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
+plugins=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,9 +100,10 @@ source $ZSH/oh-my-zsh.sh
 
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+clear
 source ~/.bashstuff/aliases 
 source ~/.bashstuff/functions.sh
-neofetch
+cat ~/.bashstuff/logo << EOF
 
 precmd() {
     precmd() {

@@ -50,5 +50,5 @@ fi
 
 numlockx &
 sxhkd &
-betterlockscreen -l dimblur -b 0 &
+sudo ntpdate 129.6.15.28 &
 exec bspwm

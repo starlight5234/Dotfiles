@@ -13,9 +13,9 @@
 	- numlockx (Num lock on startup)
 	- xbacklight (Control screen brightness)
 	- picom-ibhagwan (Rounded corners, compositer)
-	- flameshot (For taking screenshots)
-	- spectacle (Alternative for flameshot cuz my lappy sucks :v)
-	- thunar ( File Manager)
+	- Spectacle
+	- Thunar ( File Manager)
+	- SDDM
 
 * Fonts:
 
@@ -24,13 +24,16 @@
 
 ## Customizations
 
-### keyboard shortcuts
+- SDDM Theme based on Red-Dot-Black
+- Dracula Icons & GTK 3 Theme
+
+### Keyboard shortcuts
 
 Shortcuts are controlled by sxhkd, since there are no default applications handler you can set your default apps from sxhkdrc
 
-#### default keyboard shortcuts
+#### Default keyboard shortcuts
 
-| key                        | function                                                   |
+| Key                        | Function                                                   |
 | -------------------------- | ---------------------------------------------------------- |
 | win key(mod/super) + space | Launch rofi                                                |
 | super + alt + b            | Launch browser (default is firefox)                        |
@@ -52,11 +55,6 @@ Shortcuts are controlled by sxhkd, since there are no default applications handl
 | print + shift              | Launch flameshot area selection                            |
 | super + alt + t            | Launch telegram                                            |
 
-#### Auto lockscreen on wake
-
-- copy betterlockscreen@.service to /etc/systemd/system
-- run `sudo systemctl enable simplelock@$USER`
-
 #### Screenshots
 
 #### Home
@@ -67,6 +65,5 @@ Shortcuts are controlled by sxhkd, since there are no default applications handl
 
 #### Special Thanks to
 
-- [@Blacksuan19](https://github.com/blacksuan19) for his Dots as an inspiration and base.
 - [@nckmml](https://github.com/nckmml) for the volume control to avoid speakers from tearing.
 - Every package dev who made those packages

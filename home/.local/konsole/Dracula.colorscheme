@@ -1,20 +1,14 @@
 [Background]
 Color=33,34,44
-RandomHueRange=360
-RandomSaturationRange=100
 
 [BackgroundFaint]
 Color=33,34,44
-RandomHueRange=360
-RandomSaturationRange=100
 
 [BackgroundIntense]
 Color=98,114,164
-RandomHueRange=360
-RandomSaturationRange=100
 
 [Color0]
-Color=33,34,44
+Color=255,184,108
 
 [Color0Faint]
 Color=33,34,44
@@ -23,16 +17,16 @@ Color=33,34,44
 Color=98,114,164
 
 [Color1]
-Color=255,85,85
+Color=33,34,44
 
 [Color1Faint]
-Color=255,85,85
+Color=33,34,44
 
 [Color1Intense]
 Color=255,110,110
 
 [Color2]
-Color=80,250,123
+Color=43,45,58
 
 [Color2Faint]
 Color=80,250,123
@@ -50,13 +44,13 @@ Color=241,250,140
 Color=255,255,165
 
 [Color4]
-Color=139,233,253
+Color=33,34,44
 
 [Color4Faint]
-Color=139,233,253
+Color=189,147,249
 
 [Color4Intense]
-Color=139,233,253
+Color=214,172,255
 
 [Color5]
 Color=255,121,198
@@ -77,7 +71,7 @@ Color=139,233,253
 Color=164,255,255
 
 [Color7]
-Color=255,255,255
+Color=248,248,242
 
 [Color7Faint]
 Color=248,248,242
@@ -86,23 +80,17 @@ Color=248,248,242
 Color=255,255,255
 
 [Foreground]
-Color=255,255,255
-RandomHueRange=360
-RandomSaturationRange=100
+Color=248,248,242
 
 [ForegroundFaint]
-Color=255,255,255
-RandomHueRange=360
-RandomSaturationRange=100
+Color=248,248,242
 
 [ForegroundIntense]
 Color=255,255,255
-RandomHueRange=360
-RandomSaturationRange=100
 
 [General]
-Blur=true
+Blur=false
 ColorRandomization=false
 Description=Dracula
-Opacity=0.9
+Opacity=1
 Wallpaper=
