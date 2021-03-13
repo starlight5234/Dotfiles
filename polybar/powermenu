@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 40 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 4 <<< " Suspend| Logout| Reboot| Shutdown")"
+MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 3 -xoffset -10 -yoffset 45 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 4 <<< " Suspend| Logout| Reboot| Shutdown")"
             case "$MENU" in
             	*Suspend) betterlockscreen -s 2 -t "Previously logged as $USER" -u "/home/starlight/Desktop/arch.png" ;;
                 *Logout) bspc quit && killall bash;;
