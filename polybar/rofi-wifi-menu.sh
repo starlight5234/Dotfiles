@@ -11,9 +11,9 @@ POSITION=3
 YOFF=40
 XOFF=-10
 
-LIST=$(nmcli --fields "$FIELDS" device wifi list | sed '/^--/d')
+LIST=$(nmcli --fields "$FIELDS" device wifi list | awk -F'  +' '{ if (!seen[$1]++) print}' | sed -n '1!p')
 # For some reason rofi always approximates character width 2 short... hmmm
-RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+2))
+RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+3))
 # Dynamically change the height of the rofi menu
 LINENUM=$(echo "$LIST" | wc -l)
 # Gives a list of known connections so we can parse it later

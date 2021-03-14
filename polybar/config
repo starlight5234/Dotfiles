@@ -59,11 +59,11 @@ tray-detached = true
 
 [bar/rightbar]
 inherit = bar/settings
-width = 34%
-offset-x = 65.2%
+width = 37%
+offset-x = 62.3%
 
-modules-left = launcher
-modules-right = xkeyboard checknetwork pulseaudio battery time date powermenu
+modules-left = launcher xkeyboard
+modules-right = checknetwork pulseaudio battery time date powermenu
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -71,14 +71,19 @@ blacklist-0 = scroll lock
 
 format = <label-indicator>
 format-spacing = 0
-label-indicator-on-capslock = C
 label-indicator-on-numlock = N
-label-indicator-on-capslock-padding = 1
+label-indicator-on-capslock = C
 label-indicator-on-numlock-padding = 1
-label-indicator-on-capslock-background = ${colors.accent}
+label-indicator-on-capslock-padding = 1
 label-indicator-on-numlock-background = ${colors.accent}
-label-indicator-on-capslock-foreground = ${colors.foreground-alt}
+label-indicator-on-capslock-background = ${colors.accent}
 label-indicator-on-numlock-foreground = ${colors.foreground-alt}
+label-indicator-on-capslock-foreground = ${colors.foreground-alt}
+
+label-indicator-off-numlock = N
+label-indicator-off-capslock = C
+label-indicator-off-numlock-padding = 1
+label-indicator-off-capslock-padding = 1
 
 [module/bspwm]
 type = internal/bspwm
