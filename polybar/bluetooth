@@ -215,15 +215,18 @@ device_menu() {
     device_name=$(echo $device | cut -d ' ' -f 3-)
     mac=$(echo $device | cut -d ' ' -f 2)
 
+    paired=$(device_paired $mac)
+    trusted=$(device_trusted $mac)
     # Build options
     if device_connected $mac; then
         connected="Connected: yes"
+        battery=$(python3 /home/starlight/.config/polybar/battery_status.py $mac)
+        options="$connected\n$battery\n$paired\n$trusted"
     else
         connected="Connected: no"
+        options="$connected\n$paired\n$trusted"
     fi
-    paired=$(device_paired $mac)
-    trusted=$(device_trusted $mac)
-    options="$connected\n$paired\n$trusted\n$divider\n$goback\nExit"
+
 
     # Open rofi menu, read chosen option
     chosen="$(echo -e "$options" | $rofi_command "$device_name")"
