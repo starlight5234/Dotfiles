@@ -63,7 +63,7 @@ width = 37%
 offset-x = 62.3%
 
 modules-left = launcher xkeyboard
-modules-right = checknetwork pulseaudio battery time date powermenu
+modules-right = checknetwork bluetooth pulseaudio battery time date powermenu
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -170,6 +170,14 @@ animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 750
 animation-charging-underline = ${colors.accent}
 
+[module/bluetooth]
+type = custom/script
+exec = /home/starlight/.config/polybar/bluetooth --status
+tail = true
+interval = 3
+click-left = /home/starlight/.config/polybar/bluetooth &
+format-prefix = " "
+format-underline = ${colors.accent}
 
 [module/checknetwork]
 type = custom/script
