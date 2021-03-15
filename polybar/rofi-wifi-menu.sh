@@ -29,31 +29,34 @@ fi
 
 # HOPEFULLY you won't need this as often as I do
 # If there are more than 8 SSIDs, the menu will still only have 8 lines
-if [ "$LINENUM" -gt 8 ] && [[ "$CONSTATE" =~ "enabled" ]]; then
-	LINENUM=8
-elif [[ "$CONSTATE" =~ "disabled" ]]; then
-	LINENUM=1
-fi
-
 
 if [[ "$CONSTATE" =~ "enabled" ]]; then
-	TOGGLE="Toggle Off"
+	LINENUM=8
+	CHENTRY=$(echo -e "Toggle Off\n$LIST\nManual" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 elif [[ "$CONSTATE" =~ "disabled" ]]; then
-	TOGGLE="Toggle On"
+	LINENUM=1
+	RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+25))
+	CHENTRY=$(echo -e "Toggle On" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 fi
 
-
-
-CHENTRY=$(echo -e "$TOGGLE\n$LIST\nManual" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 CHSSID=$(echo "$CHENTRY" | sed  's/\s\{2,\}/\|/g' | awk -F "|" '{print $1}')
 
 # If the user inputs "manual" as their SSID in the start window, it will bring them to this screen
 if [ "$CHENTRY" = "Manual" ] ; then
 	# Manual entry of the SSID and password (if appplicable)
-	MSSID=$(echo "Enter the SSID of the network (SSID,password)" | rofi -dmenu -p "Manual Entry " -font "$FONT" -lines 1)
+	MSSID=$(echo "Enter the SSID of the network" | rofi -dmenu -p "SSID " -font "$FONT" -lines 1)
 	# Separating the password from the entered string
-	MPASS=$(echo "$MSSID" | awk -F "," '{print $2}')
+	MPASS=$(echo "Enter the password of the network" | rofi -dmenu -p "Password " -font "$FONT" -lines 1)
 
+	# Exit if no Manual SSID Entered
+	if [ "$(echo $MSSID | awk '{print $3}')" = "SSID" ]; then
+		echo "No SSID was given" | rofi -dmenu -p "" -lines "1" -location -font "$FONT" -width -"25"
+		exit 0
+	elif [ "$(echo $MPASS | awk '{print $3}')" = "password" ]; then
+		nmcli dev wifi con "$MSSID" password "$MPASS"
+	else
+		nmcli dev wifi con "$MSSID"
+	fi
 	# If the user entered a manual password, then use the password nmcli command
 	if [ "$MPASS" = "" ]; then
 		nmcli dev wifi con "$MSSID"
