@@ -6,22 +6,27 @@ ETHER="enp7s0"
 
 
 count=0
-disconnected=" 睊 Disconnected "
-connected=" 直"
 
 ID="$(ip link | awk '/state UP/ {print $2}')"
 wifi_id=$(nmcli | grep $WIFI | awk '{print $4}')
 ether_id=$(nmcli | grep $ETHER | awk '{print $4}')
 
+connected_wifi=" 直 $wifi_id"
+connected_ether=" 直 $ether_id"
+disconnected=" 睊 Disconnected "
+no_network=" 睊 No Internet "
 
 while true; do
+detect_connected=$(nmcli | grep ": connected" | awk '{print $2}')
     if (ping -c 1 archlinux.org || ping -c 1 google.com || ping -c 1 bitbucket.org || ping -c 1 github.com || ping -c 1 sourceforge.net) &>/dev/null; then
         if [[ $ID == e* ]]; then
-            echo "$connected $ether_id " ; sleep 25
+            echo "$connected_ether " ; sleep 25
         else
-            echo "$connected $wifi_id " ; sleep 25
+            echo "$connected_wifi" ; sleep 25
         fi
+    elif [ "$detect_connected" == "" ]; then
+        echo "$disconnected" ; sleep 15
     else
-        echo "$disconnected" ; sleep 0.5
+        echo "$no_network" ; sleep 10
     fi
 done
