@@ -201,9 +201,15 @@ print_status() {
                 ((counter++))
             fi
         done
-        printf "\n"
+        if [ $counter -eq 0 ]; then
+           if device_connected $mac; then
+               printf " Connected"
+           else
+               printf " On"
+           fi
+       fi
     else
-        echo ""
+        echo " Off"
     fi
 }
 
