@@ -12,10 +12,18 @@ YOFF=40
 XOFF=-10
 
 LIST=$(nmcli --fields "$FIELDS" device wifi list | awk -F'  +' '{ if (!seen[$1]++) print}' | sed -n '1!p')
+if [ -z $LIST ];then
+	LIST="No visible networks found"
+fi
+
 # For some reason rofi always approximates character width 2 short... hmmm
 RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+3))
+
 # Dynamically change the height of the rofi menu
 LINENUM=$(echo "$LIST" | wc -l)
+if [ $LINENUM == "1" ];then
+	LINENUM=3
+fi
 # Gives a list of known connections so we can parse it later
 KNOWNCON=$(nmcli connection show)
 # Really janky way of telling if there is currently a connection
@@ -31,8 +39,7 @@ fi
 # If there are more than 8 SSIDs, the menu will still only have 8 lines
 
 if [[ "$CONSTATE" =~ "enabled" ]]; then
-	LINENUM=8
-	CHENTRY=$(echo -e "Toggle Off\n$LIST\nManual" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
+	CHENTRY=$(echo -e "Toggle Off\nManual\n$LIST" | uniq -u | rofi -dmenu -p "Wi-Fi SSID " -lines "$LINENUM" -location "$POSITION" -yoffset "$YOFF" -xoffset "$XOFF" -font "$FONT" -width -"$RWIDTH")
 elif [[ "$CONSTATE" =~ "disabled" ]]; then
 	LINENUM=1
 	RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+25))
