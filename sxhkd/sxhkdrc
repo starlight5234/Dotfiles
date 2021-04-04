@@ -62,8 +62,8 @@ super + {Left,Down,Up,Right}
 # Firefox Browser
 # Thunar File Manager
 # Telegram Desktop App
-ctrl + alt + {b,f,t}
-	{firefox,thunar,telegram-desktop}
+ctrl + alt + {b,c,f,t}
+	{firefox,code-oss,thunar,telegram-desktop}
 
 # Set up Media keys and others
 
@@ -73,7 +73,7 @@ XF86AudioRaiseVolume
 
 # Increase/decrease volume by 5%
 XF86AudioLowerVolume
-    pactl set-sink-volume 0 -5%
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 # Increase/decrease brightness by 10
 XF86MonBrightness{Up,Down}
