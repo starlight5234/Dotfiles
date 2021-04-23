@@ -20,10 +20,13 @@ fi
 RWIDTH=$(($(echo "$LIST" | head -n 1 | awk '{print length($0); }')+3))
 
 # Dynamically change the height of the rofi menu
-LINENUM=$(echo "$LIST" | wc -l)
-if [ $LINENUM == "1" ];then
+LINENUM=$(($(echo "$LIST" | wc -l) + 2))
+if [  $LINENUM -le "3" ];then
 	LINENUM=3
+elif [  $LINENUM -ge "10" ];then
+	LINENUM=10
 fi
+
 # Gives a list of known connections so we can parse it later
 KNOWNCON=$(nmcli connection show)
 # Really janky way of telling if there is currently a connection
