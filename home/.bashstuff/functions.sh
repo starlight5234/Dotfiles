@@ -98,4 +98,4 @@ function fix_drive_mount(){
 	sudo mount -o rw /dev/${1} /mnt/${2}
 }
 
-PATH="/home/starlight/.google-drive-upload/bin:${PATH}"
+PATH="/home/starlight/.google-drive-upload/bin:/home/starlight/.local/bin:${PATH}"

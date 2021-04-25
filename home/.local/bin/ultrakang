@@ -1,0 +1,80 @@
+#!/bin/bash
+# Copyright (C) 2021 Anurag Chorghe
+
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Usage:
+# ultrakang -c <word/string in commit to replace> <new word to replace it with> <file path or link to commit>
+# -c can be only used for one specific string in commit msg to replace (All the appearances of that string will be replaced)
+# To replace commit strings with special character regex should be used
+
+if [ ! -d ".git" ];then
+    echo "Error: This is not a git directory"
+    exit
+fi
+
+git am --abort &> /dev/null
+rm -rf .git/rebase-apply
+REBRAND="false"
+
+generate_patch(){
+
+if [[ "${SRC}" == http://* ]] || [[ "${SRC}" == https://* ]]; then
+    curl "${SRC}".patch | git am &> /dev/null
+else
+    git am "$SRC" &> /dev/null
+fi
+
+patch="$(cat .git/rebase-apply/info)"
+
+# This stores the commit description msg
+msg="$(cat .git/rebase-apply/msg)"
+
+author_name_prefix='Author: '
+author_name="$(echo "${patch}" | grep "${author_name_prefix}" | sed -e "s/^${author_name_prefix}//")"
+
+email_prefix='Email: '
+email="$(echo "${patch}" | grep "${email_prefix}" | sed -e "s/^${email_prefix}//")"
+
+# Final author in format to be appended with git
+author="${author_name} <${email}>"
+
+# This is the commit subject
+subject_prefix='Subject: '
+subject="$(echo "${patch}" | grep "${subject_prefix}" | sed -e "s/^${subject_prefix}//")"
+
+if [ "$REBRAND" == "false" ]; then
+    final_msg="$(echo -e "$subject\n\n$msg")"
+else
+    final_msg="$(echo -e "$(echo $subject | sed -e "s/$to_replace/$replace_with/g")\n\n$msg")"
+fi
+
+date_prefix='Date: '
+date="$(echo "${patch}" | grep "${date_prefix}" | sed -e "s/^${date_prefix}//")"
+}
+
+while [ "${#}" -gt 0 ]; do
+    case "${1}" in
+        -c | --change-from )
+                REBRAND="true"
+                to_replace="${2}"; shift
+                replace_with="${2}"; shift
+                ;;
+        * )
+                SRC="${1}"
+                ;;
+    esac
+    shift
+done
+
+if [ "$REBRAND" == "true" ];then 
+    if [ -z "$to_replace" ] || [ -z "$replace_with" ]; then
+        echo "error: You gave -c but didn't give string to/with to replace "
+        exit
+    fi
+fi
+
+generate_patch
+git commit --amend -m "${final_msg}" --author "${author}" --date "${date}"
