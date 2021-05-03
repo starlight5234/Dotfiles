@@ -19,7 +19,6 @@
 
 * Fonts:
 
-> - [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 > - [Fira Code Nerd](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode)
 
 ## Customizations
@@ -36,9 +35,9 @@ Shortcuts are controlled by sxhkd, since there are no default applications handl
 | Key                        | Function                                                   |
 | -------------------------- | ---------------------------------------------------------- |
 | win key(mod/super) + space | Launch rofi                                                |
-| super + alt + b            | Launch browser (default is firefox)                        |
+| ctrl + alt + b             | Launch browser (default is firefox)                        |
 | super + Enter              | Launch terminal (default is konsole)                       |
-| super + alt + f            | Launch file manager (default is thunar)                    |
+| ctrl + alt + f             | Launch file manager (default is thunar)                    |
 | super + Escape             | Reload sxhkd settings                                      |
 | super + w                  | Kill current window                                        |
 | super + g                  | Swap current window with the biggest                       |
@@ -51,9 +50,9 @@ Shortcuts are controlled by sxhkd, since there are no default applications handl
 | super + alt + {Down,Right} | Expand window on given side                                |
 | ctrl + alt + {Left,Up}     | Contract window on inverse of given side                   |
 | super + direction          | Move floating window on given direction                    |
-| ctrl + print               | Take a full screenshot                                     |
-| print + shift              | Launch flameshot area selection                            |
-| super + alt + t            | Launch telegram                                            |
+| print                      | Take a full screenshot                                     |
+| ctrl + shift + print       | Launch flameshot area selection                            |
+| ctrl + alt + t             | Launch telegram                                            |
 
 #### Screenshots
 
