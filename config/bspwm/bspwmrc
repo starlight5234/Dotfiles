@@ -7,7 +7,7 @@ $HOME/.config/polybar/launch.sh
 picom -b
 
 # Set background using feh
-feh --bg-fill $(find ~/.config/bspwm/backgrounds -type f | shuf -n 1)
+feh --bg-fill $(find ~/.config/bspwm/backgrounds/ -type f | shuf -n 1)
 
 # Set mouse theme
 xsetroot -cursor_name left_ptr
