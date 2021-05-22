@@ -2,7 +2,7 @@
 
 MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 1 -xoffset 14 -yoffset 40 -width 10 -hide-scrollbar -line-padding 4 -padding 20 -lines 4 <<< " Suspend| Logout| Reboot| Shutdown")"
             case "$MENU" in
-            	*Suspend) betterlockscreen -s 2 -t "Previously logged as $USER" -u "/home/starlight/Desktop/arch.png" ;;
+            	*Suspend) systemctl suspend;;
                 *Logout) bspc quit && killall bash;;
                 *Reboot) systemctl reboot ;;
                 *Shutdown) systemctl -i poweroff

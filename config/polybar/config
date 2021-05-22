@@ -44,10 +44,11 @@ cursor-click = pointer
 
 [bar/polybar]
 inherit = bar/settings
-width = 100%
+width = 98.25%
+offset-x = 12.5
 modules-left = powermenu bspwm 
 modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time
-
+module-margin-right = 2
 
 ; Same Bar but split into two
 [bar/leftbar]
@@ -57,17 +58,12 @@ offset-x = 10
 
 modules-left = powermenu bspwm 
 
-tray-position = off
-tray-offset-x = -25
-tray-detached = true
-
-
 [bar/rightbar]
 inherit = bar/settings
 width = 30%
 offset-x = 69.3%
 
-modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time blank
+modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time
 
 
 [module/xkeyboard]
@@ -79,11 +75,9 @@ format = <label-indicator>
 format-spacing = 0
 
 label-indicator-on-numlock = 
-label-indicator-on-numlock-padding = 1
 label-indicator-on-numlock-background = ${colors.background}
 label-indicator-on-numlock-foreground = ${colors.foreground}
 label-indicator-off-numlock = 
-label-indicator-off-numlock-padding = 1
 
 
 [module/bspwm]
@@ -120,16 +114,16 @@ time-alt = " %H:%M:%S |  %d-%m-%Y "
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = " <ramp-volume>"
+format-volume = "<ramp-volume>"
 
-label-muted = " ﱝ"
+label-muted = "ﱝ"
 label-muted-foreground = ${colors.foreground-alt}
 
-ramp-volume-0 = " "
-ramp-volume-1 = " 奔"
-ramp-volume-2 = " 墳"
-ramp-volume-3 = " 墳"
-ramp-volume-4 = " "
+ramp-volume-0 = ""
+ramp-volume-1 = "奔"
+ramp-volume-2 = "墳"
+ramp-volume-3 = "墳"
+ramp-volume-4 = ""
 
 
 [module/battery]
@@ -141,14 +135,14 @@ full-at = 98
 format-charging = <animation-charging>
 
 format-discharging = <label-discharging>
-label-discharging = "  %percentage% "
+label-discharging = " %percentage% "
 
-format-full-prefix = "  "
+format-full-prefix = ""
 format-full-prefix-foreground = ${colors.foreground}
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-2 = " "
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
 animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 750
 
@@ -159,7 +153,6 @@ exec = /home/starlight/.config/polybar/bluetooth --status
 tail = true
 interval = 3
 click-left = /home/starlight/.config/polybar/bluetooth &
-format-prefix = " "
 format-underline = ${colors.background}
 
 
@@ -174,11 +167,9 @@ format-underline = ${colors.background}
 
 [module/powermenu]
 type = custom/text
-format-padding = 0
-content = ""
+content = "  "
 content-foreground = ${colors.foreground}
 content-background = ${colors.background}
-content-padding = 2
 click-left = ~/.config/polybar/powermenu &
 
 
