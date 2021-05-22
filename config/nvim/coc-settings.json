@@ -1,0 +1,22 @@
+{
+  "coc.preferences.colorSupport": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "html",
+    "yaml",
+    "json",
+    "python"
+  ],
+
+  "signature.target": "echo",
+
+  "git.addedSign.text": "+",
+  "git.changedSign.text": "~",
+  "git.changeRemovedSign.text": "~",
+  "git.removedSign.text": "-",
+  "git.topRemovedSign.text": "-",
+
+  "python.formatting.provider": "black",
+  "python.sortImports.args": ["--profile", "black", "--filter-files"]
+}
