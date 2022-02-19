@@ -20,14 +20,14 @@
 background = #0000
 background-alt = #0000
 foreground = #f8f8f2
-foreground-alt = #151515
+foreground-alt = #3B4252
 accent = #ff5555
 
 
 [bar/settings]
-height = 22
+height = 30
 radius = 0
-offset-y = 8
+offset-y = 5
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -46,8 +46,8 @@ cursor-click = pointer
 inherit = bar/settings
 width = 98.25%
 offset-x = 12.5
-modules-left = powermenu bspwm 
-modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time
+modules-left = powermenu bspwm
+modules-right = checknetwork pulseaudio xkeyboard time blank
 module-margin-right = 2
 
 ; Same Bar but split into two
@@ -55,20 +55,17 @@ module-margin-right = 2
 inherit = bar/settings
 width = 24%
 offset-x = 10
-
-modules-left = powermenu bspwm 
+modules-left = powermenu bspwm
 
 [bar/rightbar]
 inherit = bar/settings
 width = 30%
 offset-x = 69.3%
-
-modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time
-
+modules-right = checknetwork bluetooth pulseaudio battery xkeyboard time blank
 
 [module/xkeyboard]
 type = internal/xkeyboard
-blacklist-0 = scroll lock 
+blacklist-0 = scroll lock
 blacklist-1 = caps lock
 
 format = <label-indicator>
@@ -108,17 +105,18 @@ label = %time%
 format-foreground = ${colors.foreground}
 format-underline = ${colors.background}
 time = "%H:%M | %a, %d %b "
-time-alt = " %H:%M:%S |  %d-%m-%Y "
+time-alt = " %H:%M:%S |  %d-%m-%Y"
 
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = "<ramp-volume>"
+format-volume = "<ramp-volume> <label-volume>"
 
-label-muted = "ﱝ"
+label-muted = "婢 Muted"
 label-muted-foreground = ${colors.foreground-alt}
 
+label-volume = %percentage%%
 ramp-volume-0 = ""
 ramp-volume-1 = "奔"
 ramp-volume-2 = "墳"
@@ -164,13 +162,18 @@ interval = 1
 click-left = /home/starlight/.config/polybar/rofi-wifi-menu.sh &
 format-underline = ${colors.background}
 
-
 [module/powermenu]
 type = custom/text
 content = "  "
 content-foreground = ${colors.foreground}
 content-background = ${colors.background}
 click-left = ~/.config/polybar/powermenu &
+
+[module/blank]
+type = custom/text
+content = " "
+content-foreground = ${colors.foreground}
+content-background = ${colors.background}
 
 
 [settings]

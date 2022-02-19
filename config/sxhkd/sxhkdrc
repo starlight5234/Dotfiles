@@ -35,7 +35,8 @@ super + {t,shift + t,f,shift+f}
 #
 
 # focus the node in the given direction
-super + alt + {_,shift + }{j,k,i,l}
+# super + .....
+alt + {_,shift + }{Left,Down,Up,Right}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the last node/desktop
@@ -59,25 +60,18 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 # Some Custom keys for usage
-# Firefox Browser
-# Thunar File Manager
-# Telegram Desktop App
-ctrl + alt + {b,c,f,t}
-	{firefox,code-oss,thunar,telegram-desktop}
+ctrl + alt + {b,c,d,f,t}
+	{firefox,code,discord,thunar,telegram-desktop}
 
 # Set up Media keys and others
 
-# Increase volume by 5% till it reaches 120% to save from tearing
+# Increase volume by 5% till it reaches 100 to save from tearing
 XF86AudioRaiseVolume
     bash /home/starlight/.config/sxhkd/volume.sh
 
 # Increase/decrease volume by 5%
 XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
-
-# Increase/decrease brightness by 10
-XF86MonBrightness{Up,Down}
-    xbacklight {-inc,-dec} 5
+    amixer -D pulse sset Master 5%-
 
 # Next, previous, play-pause toggle
 XF86Audio{Next,Prev,Play}
@@ -88,17 +82,16 @@ XF86AudioMute
     pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Save screenshot, gui
-Print + {super,ctrl}
-    flameshot {full -p /home/starlight/Pictures/Screenshots, gui}
+Print + {_,alt}
+    flameshot {full -c,full -c -d 5000}
+
+super + shift + S
+    flameshot gui
 
 # Program Selection Launcher
 super + space
-	~/.config/polybar/launcher
+    bash /home/starlight/.config/polybar/launcher
 
-# Betterlockscreen
-alt + shift + x
-    betterlockscreen -l dim
-
-# Suspend Device with betterlockscreen
-alt + shift + Escape
-    betterlockscreen -s 5 -t "Previously logged as $USER"
+# Program Selection Launcher v2
+super + alt + space
+	ulauncher
