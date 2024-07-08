@@ -3,7 +3,7 @@
 
 # shell settings
 setopt BANG_HIST                 # Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+# setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
@@ -49,13 +49,26 @@ alias gcp="git cherry-pick"
 alias py="python3"
 alias l="ls -CAF"
 
-# Package manager
-alias cleanc="sudo apt autoclean" # Clean partial package
-alias cleanOr="sudo apt autoremove" # Clean unused dependencies
-alias install="sudo apt install -y"
-alias rem="sudo apt autoremove"
-alias search="sudo apt search"
-alias show="sudo apt show"
-alias upd="sudo apt update"
-alias upg="sudo apt upgrade"
+# Package manager (Ubuntu)
+# alias cleanc="sudo apt autoclean" # Clean partial package
+# alias cleanOr="sudo apt autoremove" # Clean unused dependencies
+# alias install="sudo apt install -y"
+# alias rem="sudo apt autoremove"
+# alias search="sudo apt search"
+# alias show="sudo apt show"
+# alias upd="sudo apt update"
+# alias upg="sudo apt upgrade"
 
+# Package manager (OpenSUSE)
+alias cleanc="sudo zypper clean -a" # Clean partial package
+alias cleanOr="sudo zypper remove --clean-deps" # Clean unused dependencies
+alias install="sudo zypper install -y"
+alias ninstall="sudo zypper install"
+alias rem="sudo zypper remove"
+alias search="zypper search"
+alias show="zypper info"
+alias upd="sudo zypper refresh"
+alias upg="sudo zypper update"
+alias lip="sudo zypper list-patches"
+alias liu="sudo zypper list-updates"
+alias suzy="sudo zypper"
