@@ -1,4 +1,4 @@
-let mapleader=','
+let mapleader='\'
 
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -10,18 +10,21 @@ endif
 " plugins
 call plug#begin(expand('~/.config/nvim/plugged'))
 
+"Plug 'Luxed/ayu-vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'
-Plug 'Luxed/ayu-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'preservim/nerdcommenter'
 Plug 'psliwka/vim-smoothie'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
-Plug 'preservim/nerdcommenter'
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 
 call plug#end()
 
@@ -36,15 +39,18 @@ syntax on
 set termguicolors
 set t_Co=256
 set background=dark
-let ayucolor="mirage"
-colorscheme ayu
+"let ayucolor="mirage"
+colorscheme nord
 
 hi Comment gui=italic cterm=italic
 hi CursorLineNr gui=bold
-hi DiffAdd guibg=NONE
-hi DiffChange guibg=NONE
-hi DiffDelete guibg=NONE
-hi SignColumn guibg=NONE
+hi DiffAdd ctermbg=NONE guibg=NONE
+hi DiffChange ctermbg=NONE guibg=NONE
+hi DiffDelete ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
+hi Normal ctermbg=NONE guibg=NONE
+hi NonText ctermbg=NONE guibg=NONE
+"au ColorScheme * hi Normal ctermbg=none guibg=none
 
 " general configs
 set noerrorbells
@@ -62,7 +68,7 @@ set encoding=utf-8
 set emoji
 set title
 set noshowcmd
-"set cursorline
+set cursorline
 set whichwrap+=<,>,[,],h,l
 set hidden
 set cmdheight=2
@@ -111,7 +117,7 @@ nnoremap ; :
 vnoremap ; :
 
 " airline
-let g:airline_theme='ayu'
+let g:airline_theme='nord'
 let g:airline_skip_empty_sections = 1
 let g:airline_section_warning = ''
 let g:airline_section_x=''
@@ -137,9 +143,9 @@ let loaded_netrw = 0
 
 " fzf (kanged from Blacksuan19/init.nvim)
 let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+            \ 'ctrl-t': 'tab split',
+            \ 'ctrl-x': 'split',
+            \ 'ctrl-v': 'vsplit' }
 
 let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'border': 'sharp' } }
 let g:fzf_tags_command = 'ctags -R'
@@ -158,7 +164,7 @@ augroup END
 
 " files in fzf
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--inline-info']}), <bang>0)
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--inline-info']}), <bang>0)
 
 " advanced grep
 command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
@@ -223,12 +229,12 @@ let g:coc_global_extensions = [
 " close autocomplete popup after autocomplete
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
-" use tab for trigger completion with characters ahead and navigate
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Use <c-space> to trigger completion.
+if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+else
+    inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " use K to show documentation in preview window
 nnoremap <silent>K :call <SID>show_documentation()<CR>
@@ -243,17 +249,15 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=0 Organize :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " add neovim's native statusline support
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " python renaming
 autocmd FileType python nnoremap <leader>rn :Semshi rename <CR>
 
-" functions
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" Git commit message line length
+au FileType gitcommit setlocal tw=72
 
+" functions
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
@@ -266,20 +270,3 @@ endfunction
 
 autocmd filetype c nnoremap <F9> :w <CR> :!gcc % -o %< && clear; ./%< <CR>
 autocmd filetype python nnoremap <F9> :w <CR> :!python3 %<CR>
-
-" custom rules for projects and certain filetypes
-autocmd BufRead,BufNewFile *.md set wrap lbr
-autocmd BufRead,BufNewFile /home/kenhv/projects/mirrorbot/** au! BufWritePre
-autocmd BufRead,BufNewFile /mnt/hdd/kernel/** au! BufWritePre
-autocmd BufRead,BufNewFile /mnt/hdd/kernel/** set noexpandtab
-autocmd BufRead,BufNewFile,BufAdd /mnt/hdd/kernel/** let b:coc_enabled=0
-"autocmd BufRead,BufNewFile,BufAdd /home/kenhv/univ/sotc/** let b:coc_enabled=0
-
-" BG Transparency
-hi Normal guibg=NONE ctermbg=NONE
-hi NonText ctermbg=none
-set t_8f=\[[38;2;%lu;%lu;%lum
-set t_8b=\[[48;2;%lu;%lu;%lum
-hi airline_c ctermbg=NONE guibg=NONE
-hi airline_tabfill ctermbg=NONE guibg=NONE
-highlight clear LineNr

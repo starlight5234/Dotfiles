@@ -1,5 +1,4 @@
 {
-  "coc.preferences.colorSupport": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "markdown",
@@ -18,5 +17,7 @@
   "git.topRemovedSign.text": "-",
 
   "python.formatting.provider": "black",
-  "python.sortImports.args": ["--profile", "black", "--filter-files"]
+  "python.sortImports.args": ["--profile", "black", "--filter-files"],
+
+  "prettier.proseWrap": "always"
 }
